@@ -18,6 +18,6 @@ In case you are able to fix by yourself a bug, enhance the code or implement a n
 
 ## License
 
-This project is released under the [MIT license](LICENSE). Feel free to use, contribute, fork and do
+This project is released under the [MIT license](LICENCE.txt). Feel free to use, contribute, fork and do
 what you want with it. Please keep all licenses, copyright notices and mentions in case you use,
 re-use, steal, fork code from this repository.
