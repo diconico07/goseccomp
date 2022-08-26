@@ -4,9 +4,9 @@
 
 ## Roadmap
 
-[ ] Add a complete documentation of the API
-[ ] Add support for retrieving seccomp user notifications
-[ ] Add support for more argument filter types
+- [ ] Add a complete documentation of the API
+- [ ] Add support for retrieving seccomp user notifications
+- [ ] Add support for more argument filter types
 
 ## Contributions
 
