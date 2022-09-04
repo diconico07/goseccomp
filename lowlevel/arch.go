@@ -4,6 +4,10 @@ package lowlevel
 
 import "golang.org/x/sys/unix"
 
+// GetAuditArch converts a GOARCH string (as in [runtime.GOARCH]) into its pendant
+// in linux kernel audit identifier.
+//
+// If the given architecture string is unknown, GetAuditArch returns 0.
 func GetAuditArch(goArch string) uint32 {
 	switch goArch {
 	case "386":
@@ -55,10 +59,14 @@ func GetAuditArch(goArch string) uint32 {
 	}
 }
 
+// ArchIs64Bits identifies whether the given GOARCH string is
+// considered 64 bits by the linux kernel
 func ArchIs64Bits(goArch string) bool {
 	return GetAuditArch(goArch)&0x80000000 != 0
 }
 
+// ArchIs64Bits identifies whether the given GOARCH string is
+// considered little endian by the linux kernel
 func ArchIsLittleEndian(goArch string) bool {
 	return GetAuditArch(goArch)&0x40000000 != 0
 }
