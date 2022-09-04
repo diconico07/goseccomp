@@ -1,4 +1,5 @@
 // SPDX-Licence-Identifier: MIT
+
 package goseccomp
 
 import "testing"

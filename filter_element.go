@@ -1,4 +1,5 @@
 // SPDX-Licence-Identifier: MIT
+
 package goseccomp
 
 import "golang.org/x/net/bpf"
