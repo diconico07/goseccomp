@@ -4,6 +4,7 @@ package goseccomp
 
 import "golang.org/x/net/bpf"
 
+// FilterElement is a part of a seccomp filter grouping calls that leads to the same decision.
 type FilterElement struct {
 	Match    []SyscallCallFilter
 	Decision Decision

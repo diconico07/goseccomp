@@ -20,11 +20,15 @@ const (
 	UserNotify  DecisionType = lowlevel.SECCOMP_RET_USER_NOTIF
 )
 
+// Decision represent an outcome of the BPF seccomp filter
 type Decision struct {
+	// Type is one of the allowed return code for a BPF seccomp filter
 	Type DecisionType
+	// Data is the arbitrary data that can accompany some of the decisions
 	Data uint16
 }
 
+// ToUint32 converts the Decision into an integer suitable for BPF return value
 func (d Decision) ToUint32() uint32 {
 	return uint32(d.Type) | uint32(d.Data)
 }

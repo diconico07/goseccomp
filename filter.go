@@ -12,10 +12,15 @@ import (
 
 var CurrentArch string = runtime.GOARCH
 
+// Filter represents a full fledged seccomp filter
 type Filter struct {
-	Elements        []FilterElement
+	// Elements is a slice of FilterElements that build the filter
+	Elements []FilterElement
+	// DefaultDecision is the decision that get applied if nothing match
 	DefaultDecision Decision
-	Architecture    string
+	// Architecture is the architecture for which the filter is designed.
+	// If Architecture doesn't match process will be killed.
+	Architecture string
 }
 
 func (f *Filter) mergeAllDuplicatesDecisions() {
@@ -98,6 +103,8 @@ OUTER:
 	}
 }
 
+// Optimize re-order filter elements to have an ordered Filter that
+// take all given decisions accordingly, spurious filter elements are removed.
 func (f *Filter) Optimize() {
 	f.mergeAllDuplicatesDecisions()
 	f.splitOrderElements()
@@ -109,6 +116,8 @@ func (f *Filter) Optimize() {
 
 }
 
+// Compile produce a slice of BPF raw instructions ready to be injected
+// into the seccomp syscall.
 func (f *Filter) Compile() ([]bpf.RawInstruction, error) {
 	if !lowlevel.SeccompGetActionAvail(uint(f.DefaultDecision.Type)) {
 		return nil, fmt.Errorf(
@@ -150,6 +159,9 @@ func (f *Filter) Compile() ([]bpf.RawInstruction, error) {
 	return rawBpf, nil
 }
 
+// Insert compiles and insert the given Filter in the current thread.
+// Will set the NoNewPrivs bit. To be effective this must be done before
+// any thread gets created.
 func (f *Filter) Insert() error {
 	err := lowlevel.NoNewPrivs()
 	if err != nil {

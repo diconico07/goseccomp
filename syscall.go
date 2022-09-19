@@ -9,18 +9,25 @@ import (
 	"golang.org/x/net/bpf"
 )
 
+// Represent a simple equality check for a syscall argument
 type SyscallArgument struct {
 	Value uintptr
 	isAny bool
 }
 
+// Special SyscallArgument that always match (used to ignore the value of that argument)
 func Any() SyscallArgument { return SyscallArgument{Value: 0, isAny: true} }
 
+// Smallest element of a seccomp filter, this allow to check for a specific syscall and its arguments
 type SyscallCallFilter struct {
+	// Number is the syscall number to match
 	Number uint
-	Args   [6]SyscallArgument
+	// Args is an array of the arguments to the syscall, there are always six of them, to ignore an argument
+	// value set it to Any()
+	Args [6]SyscallArgument
 }
 
+// Match tells if the two SyscallCallFilter are matching for the same call
 func (a SyscallCallFilter) Match(b SyscallCallFilter) bool {
 	if a.Number != b.Number {
 		return false
@@ -36,6 +43,8 @@ func (a SyscallCallFilter) Match(b SyscallCallFilter) bool {
 	return true
 }
 
+// IsMorePrecise tell if the given SyscallCallFilter is more precise than the one given in argument.
+// This shall only be used when Match returns true, else result doesn't bear any sense.
 func (a SyscallCallFilter) IsMorePrecise(b SyscallCallFilter) bool {
 	for i, v := range a.Args {
 		if v.isAny && !b.Args[i].isAny {
