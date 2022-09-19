@@ -17,7 +17,7 @@ type TestCaseFilterSelf struct {
 	Expected Filter
 }
 
-func TestFilterMergeAllDuplcates(t *testing.T) {
+func TestFilterMergeAllDuplicates(t *testing.T) {
 	cases := []TestCaseFilterSelf{
 		{
 			Orig:     Filter{},
@@ -81,7 +81,7 @@ func TestFilterMergeAllDuplcates(t *testing.T) {
 	}
 }
 
-func TestFilterMergeConsecutiveDuplcates(t *testing.T) {
+func TestFilterMergeConsecutiveDuplicates(t *testing.T) {
 	cases := []TestCaseFilterSelf{
 		{
 			Orig:     Filter{},
